@@ -76,7 +76,7 @@ label{display:block;text-align:left;font-size:12px;color:#888;margin-bottom:6px}
 <span style="font-size:22px;color:#a855f7;cursor:pointer" onclick="goTo('home')"></span>
 <div style="text-align:center">
 <div style="font-size:16px;font-weight:bold">Profil & Keamanan</div>
-<div style="font-size:11px;color:#888">Foto ∑ title ∑ banner ∑ password</div>
+<div style="font-size:11px;color:#888">Foto ¬∑ title ¬∑ banner ¬∑ password</div>
 </div>
 <span style="font-size:18px;color:#888;cursor:pointer" onclick="goTo('home')"></span>
 </div>
@@ -97,7 +97,7 @@ label{display:block;text-align:left;font-size:12px;color:#888;margin-bottom:6px}
 <div id="titleTampil" style="text-align:center;color:#a855f7;font-size:12px;font-weight:bold;letter-spacing:2px;margin-bottom:15px">RAJA IBLIS</div>
 
 <div style="display:flex;justify-content:center;gap:8px;margin-bottom:22px;flex-wrap:wrap">
-<div style="background:#0f1420;border:1px solid #d4af37;border-radius:20px;padding:6px 12px;font-size:10px;color:#d4af37"> GS ∑ OFFLINE ∑ 1D 17H 4M FROZEN</div>
+<div style="background:#0f1420;border:1px solid #d4af37;border-radius:20px;padding:6px 12px;font-size:10px;color:#d4af37"> GS ¬∑ OFFLINE ¬∑ 1D 17H 4M FROZEN</div>
 <div style="background:#0f1420;border:1px solid #2a3142;border-radius:20px;padding:6px 12px;font-size:10px;color:#aaa"> 08/10/2026</div>
 </div>
 
@@ -148,7 +148,7 @@ label{display:block;text-align:left;font-size:12px;color:#888;margin-bottom:6px}
 <div style="font-size:11px;color:#888;letter-spacing:1px;margin:20px 0 12px">KEAMANAN</div>
 <div style="background:#1a1f2e;border:1px solid #2a3142;border-radius:14px;padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="openModalPassword()">
 <div style="display:flex;align-items:center;gap:12px;font-size:14px"> Ubah Password</div>
-<div style="color:#666;font-size:18px">õ</div>
+<div style="color:#666;font-size:18px">¬õ</div>
 </div>
 
 <button onclick="logout()" style="width:100%;padding:14px;background:#ff3b3b;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:10px">Logout</button>
@@ -195,4 +195,52 @@ label{display:block;text-align:left;font-size:12px;color:#888;margin-bottom:6px}
 
 <div class="page" id="p-translate"><div class="back" onclick="goTo('home')"> Translate</div><div class="cont"><input id="tri" placeholder="Teks..."><select id="trl"><option value="en">Indonesia  Inggris</option><option value="id">Inggris  Indonesia</option><option value="ja">Indonesia  Jepang</option></select><button onclick="doTranslate()">Terjemahkan</button><div class="res" id="trr">-</div></div></div>
 
-<div class="page" id="p-kbbi"><div cl
+<div class="page" id="p-kbbi"><div class="back" onclick="goTo('home')">‚Üê KBBI</div><div class="cont"><input id="kbbii" placeholder="Kata..."><button onclick="cariKbbi()">Cari Arti</button><div class="res" id="kbbir">-</div></div></div>
+
+<div class="page" id="p-wiki"><div class="back" onclick="goTo('home')">‚Üê Wikipedia</div><div class="cont"><input id="wikii" placeholder="Cari..."><button onclick="cariWiki()">Cari</button><div class="res" id="wikiris">-</div></div></div>
+
+<script>
+var u=localStorage.getItem('logged_in');
+if(!u){ window.location.href='index.html'; }
+document.getElementById('ava').textContent=u.charAt(0).toUpperCase();
+document.getElementById('pnm').textContent=u;
+
+function logout(){ localStorage.removeItem('logged_in'); window.location.href='index.html'; }
+function goTo(p){
+    document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+    var el=document.getElementById('p-'+p);
+    if(el)el.classList.add('active');
+    var t={home:'MY APP',profile:'Profil',kalk:'Kalkulator',cat:'Catatan',todo:'To-Do',pw:'Password',umur:'Umur',bmi:'BMI',kurs:'Kurs',cuaca:'Cuaca',stop:'Stopwatch',tip:'Tip',diskon:'Diskon',b64:'Base64',qrcode:'QR Generator',quotes:'Quotes',translate:'Translate',kbbi:'KBBI',wiki:'Wikipedia'};
+    document.getElementById('pt').textContent=t[p]||'MY APP';
+    window.scrollTo(0,0);
+}
+function kalk(){try{document.getElementById('kalkr').innerText='= '+eval(document.getElementById('kalki').value);}catch(e){document.getElementById('kalkr').innerText='Error';}}
+function simpanCat(){var t=document.getElementById('cati').value;localStorage.setItem('catatan',t);document.getElementById('catr').innerText=t||'Kosong';}
+function hapusCat(){localStorage.removeItem('catatan');document.getElementById('cati').value='';document.getElementById('catr').innerText='Dihapus';}
+(function(){var c=localStorage.getItem('catatan');if(c){document.getElementById('cati').value=c;document.getElementById('catr').innerText=c;}})();
+function addTodo(){var t=document.getElementById('todoi').value.trim();if(!t)return;var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}l.push(t);localStorage.setItem('todo',JSON.stringify(l));document.getElementById('todoi').value='';renderTodo();}
+function renderTodo(){var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}var e=document.getElementById('todor');if(l.length===0){e.innerHTML='Belum ada tugas';return;}e.innerHTML=l.map(function(t,i){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1f2e"><span>'+(i+1)+'. '+t+'</span><span onclick="delTodo('+i+')" style="color:#ff6b6b;cursor:pointer">‚úï</span></div>';}).join('');}
+function delTodo(i){var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}l.splice(i,1);localStorage.setItem('todo',JSON.stringify(l));renderTodo();}
+renderTodo();
+function genPw(){var n=parseInt(document.getElementById('pwl').value)||16;var c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';var s='';for(var i=0;i<n;i++)s+=c.charAt(Math.floor(Math.random()*c.length));document.getElementById('pwr').innerText=s;}
+function umur(){var d=new Date(document.getElementById('umuri').value);if(isNaN(d))return;var n=new Date();var y=n.getFullYear()-d.getFullYear();var m=n.getMonth()-d.getMonth();var dd=n.getDate()-d.getDate();if(dd<0){m--;dd+=30;}if(m<0){y--;m+=12;}document.getElementById('umurr').innerText=y+' tahun, '+m+' bulan, '+dd+' hari';}
+function bmi(){var b=parseFloat(document.getElementById('bb').value);var t=parseFloat(document.getElementById('tb').value)/100;if(!b||!t)return;var v=b/(t*t);var s=v<18.5?'Kurus':v<25?'Normal':v<30?'Gemuk':'Obesitas';document.getElementById('bmir').innerText='BMI: '+v.toFixed(1)+' ('+s+')';}
+async function kurs(){var d=document.getElementById('kd').value;var k=document.getElementById('kk').value;var j=parseFloat(document.getElementById('kj').value)||1;try{var r=await fetch('https://api.exchangerate-api.com/v4/latest/'+d);var data=await r.json();document.getElementById('kursr').innerText=j+' '+d+' = '+(j*data.rates[k]).toFixed(2)+' '+k;}catch(e){document.getElementById('kursr').innerText='Gagal ambil kurs.';}}
+async function cuaca(){var k=document.getElementById('cuacai').value;if(!k)return;try{var r=await fetch('https://wttr.in/'+encodeURIComponent(k)+'?format=j1');var d=await r.json();var c=d.current_condition[0];document.getElementById('cuacar').innerHTML='<b>'+k+'</b><br>Suhu: '+c.temp_C+'¬∞C<br>Cuaca: '+c.weatherDesc[0].value+'<br>Kelembaban: '+c.humidity+'%';}catch(e){document.getElementById('cuacar').innerText='Kota tidak ditemukan.';}}
+var swI=null,swD=0;
+function swRender(){var h=String(Math.floor(swD/3600)).padStart(2,'0');var m=String(Math.floor((swD%3600)/60)).padStart(2,'0');var s=String(swD%60).padStart(2,'0');document.getElementById('sw').innerText=h+':'+m+':'+s;}
+function swStart(){if(swI)return;swI=setInterval(function(){swD++;swRender();},1000);}
+function swStop(){clearInterval(swI);swI=null;}
+function swReset(){swStop();swD=0;swRender();}
+function tip(){var t=parseFloat(document.getElementById('tipt').value)||0;var p=parseFloat(document.getElementById('tipp').value)||0;var x=t*p/100;document.getElementById('tipr').innerText='Tip: Rp '+x.toLocaleString('id-ID')+'\nTotal: Rp '+(t+x).toLocaleString('id-ID');}
+function diskon(){var h=parseFloat(document.getElementById('dh').value)||0;var p=parseFloat(document.getElementById('dp2').value)||0;var d=h*p/100;document.getElementById('diskr').innerText='Diskon: Rp '+d.toLocaleString('id-ID')+'\nHarga Akhir: Rp '+(h-d).toLocaleString('id-ID');}
+function enc(){document.getElementById('b64r').innerText=btoa(document.getElementById('b64i').value);}
+function dec(){try{document.getElementById('b64r').innerText=atob(document.getElementById('b64i').value);}catch(e){document.getElementById('b64r').innerText='Error';}}
+function buatQR(){var t=document.getElementById('qri').value;if(!t){document.getElementById('qrr').innerText='Isi dulu!';return;}document.getElementById('qrr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+encodeURIComponent(t)+'">';}
+function ambilQuotes(){var q=['Hidup itu sederhana, kita yang membuatnya rumit.','Jangan tunggu besok, mulai sekarang.','Kegagalan adalah awal dari kesuksesan.','Berpikir positif, hasil positif.','Setiap hari adalah kesempatan baru.','Jangan pernah menyerah, kesuksesan menunggu.'];document.getElementById('quotesr').innerText=q[Math.floor(Math.random()*q.length)];}
+function doTranslate(){var t=document.getElementById('tri').value;var l=document.getElementById('trl').value;if(!t)return;document.getElementById('trr').innerHTML='<a href="https://translate.google.com/?sl=auto&tl='+l+'&text='+encodeURIComponent(t)+'" target="_blank" style="color:#a855f7">Buka Google Translate</a>';}
+function cariKbbi(){var t=document.getElementById('kbbii').value;if(!t)return;document.getElementById('kbbir').innerHTML='<a href="https://kbbi.kemdikbud.go.id/entri/'+encodeURIComponent(t)+'" target="_blank" style="color:#a855f7">Lihat arti "'+t+'" di KBBI</a>';}
+function cariWiki(){var t=document.getElementById('wikii').value;if(!t)return;document.getElementById('wikiris').innerHTML='<a href="https://id.wikipedia.org/wiki/'+encodeURIComponent(t)+'" target="_blank" style="color:#a855f7">Lihat "'+t+'" di Wikipedia</a>';}
+</script>
+</body>
+</html>
