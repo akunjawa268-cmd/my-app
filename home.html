@@ -204,29 +204,28 @@ var u=localStorage.getItem('logged_in');
 if(!u){ window.location.href='index.html'; }
 document.getElementById('ava').textContent=u.charAt(0).toUpperCase();
 document.getElementById('pnm').textContent=u;
-
 function logout(){ localStorage.removeItem('logged_in'); window.location.href='index.html'; }
 function goTo(p){
-    document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
-    var el=document.getElementById('p-'+p);
-    if(el)el.classList.add('active');
-    var t={home:'MY APP',profile:'Profil',kalk:'Kalkulator',cat:'Catatan',todo:'To-Do',pw:'Password',umur:'Umur',bmi:'BMI',kurs:'Kurs',cuaca:'Cuaca',stop:'Stopwatch',tip:'Tip',diskon:'Diskon',b64:'Base64',qrcode:'QR Generator',quotes:'Quotes',translate:'Translate',kbbi:'KBBI',wiki:'Wikipedia'};
-    document.getElementById('pt').textContent=t[p]||'MY APP';
-    window.scrollTo(0,0);
+document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
+var el=document.getElementById('p-'+p);
+if(el)el.classList.add('active');
+var t={home:'MY APP',profile:'Profil',kalk:'Kalkulator',cat:'Catatan',todo:'To-Do',pw:'Password',umur:'Umur',bmi:'BMI',kurs:'Kurs',cuaca:'Cuaca',stop:'Stopwatch',tip:'Tip',diskon:'Diskon',b64:'Base64',qrcode:'QR Generator',quotes:'Quotes',translate:'Translate',kbbi:'KBBI',wiki:'Wikipedia'};
+document.getElementById('pt').textContent=t[p]||'MY APP';
+window.scrollTo(0,0);
 }
 function kalk(){try{document.getElementById('kalkr').innerText='= '+eval(document.getElementById('kalki').value);}catch(e){document.getElementById('kalkr').innerText='Error';}}
 function simpanCat(){var t=document.getElementById('cati').value;localStorage.setItem('catatan',t);document.getElementById('catr').innerText=t||'Kosong';}
 function hapusCat(){localStorage.removeItem('catatan');document.getElementById('cati').value='';document.getElementById('catr').innerText='Dihapus';}
 (function(){var c=localStorage.getItem('catatan');if(c){document.getElementById('cati').value=c;document.getElementById('catr').innerText=c;}})();
 function addTodo(){var t=document.getElementById('todoi').value.trim();if(!t)return;var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}l.push(t);localStorage.setItem('todo',JSON.stringify(l));document.getElementById('todoi').value='';renderTodo();}
-function renderTodo(){var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}var e=document.getElementById('todor');if(l.length===0){e.innerHTML='Belum ada tugas';return;}e.innerHTML=l.map(function(t,i){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1f2e"><span>'+(i+1)+'. '+t+'</span><span onclick="delTodo('+i+')" style="color:#ff6b6b;cursor:pointer">✕</span></div>';}).join('');}
+function renderTodo(){var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}var e=document.getElementById('todor');if(l.length===0){e.innerHTML='Belum ada tugas';return;}e.innerHTML=l.map(function(t,i){return '<div style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid #1a1f2e"><span>'+(i+1)+'. '+t+'</span><span onclick="delTodo('+i+')" style="color:#ff6b6b;cursor:pointer">X</span></div>';}).join('');}
 function delTodo(i){var l=[];try{l=JSON.parse(localStorage.getItem('todo')||'[]');}catch(e){l=[];}l.splice(i,1);localStorage.setItem('todo',JSON.stringify(l));renderTodo();}
 renderTodo();
 function genPw(){var n=parseInt(document.getElementById('pwl').value)||16;var c='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*';var s='';for(var i=0;i<n;i++)s+=c.charAt(Math.floor(Math.random()*c.length));document.getElementById('pwr').innerText=s;}
 function umur(){var d=new Date(document.getElementById('umuri').value);if(isNaN(d))return;var n=new Date();var y=n.getFullYear()-d.getFullYear();var m=n.getMonth()-d.getMonth();var dd=n.getDate()-d.getDate();if(dd<0){m--;dd+=30;}if(m<0){y--;m+=12;}document.getElementById('umurr').innerText=y+' tahun, '+m+' bulan, '+dd+' hari';}
 function bmi(){var b=parseFloat(document.getElementById('bb').value);var t=parseFloat(document.getElementById('tb').value)/100;if(!b||!t)return;var v=b/(t*t);var s=v<18.5?'Kurus':v<25?'Normal':v<30?'Gemuk':'Obesitas';document.getElementById('bmir').innerText='BMI: '+v.toFixed(1)+' ('+s+')';}
 async function kurs(){var d=document.getElementById('kd').value;var k=document.getElementById('kk').value;var j=parseFloat(document.getElementById('kj').value)||1;try{var r=await fetch('https://api.exchangerate-api.com/v4/latest/'+d);var data=await r.json();document.getElementById('kursr').innerText=j+' '+d+' = '+(j*data.rates[k]).toFixed(2)+' '+k;}catch(e){document.getElementById('kursr').innerText='Gagal ambil kurs.';}}
-async function cuaca(){var k=document.getElementById('cuacai').value;if(!k)return;try{var r=await fetch('https://wttr.in/'+encodeURIComponent(k)+'?format=j1');var d=await r.json();var c=d.current_condition[0];document.getElementById('cuacar').innerHTML='<b>'+k+'</b><br>Suhu: '+c.temp_C+'°C<br>Cuaca: '+c.weatherDesc[0].value+'<br>Kelembaban: '+c.humidity+'%';}catch(e){document.getElementById('cuacar').innerText='Kota tidak ditemukan.';}}
+async function cuaca(){var k=document.getElementById('cuacai').value;if(!k)return;try{var r=await fetch('https://wttr.in/'+encodeURIComponent(k)+'?format=j1');var d=await r.json();var c=d.current_condition[0];document.getElementById('cuacar').innerHTML='<b>'+k+'</b><br>Suhu: '+c.temp_C+'C<br>Cuaca: '+c.weatherDesc[0].value+'<br>Kelembaban: '+c.humidity+'%';}catch(e){document.getElementById('cuacar').innerText='Kota tidak ditemukan.';}}
 var swI=null,swD=0;
 function swRender(){var h=String(Math.floor(swD/3600)).padStart(2,'0');var m=String(Math.floor((swD%3600)/60)).padStart(2,'0');var s=String(swD%60).padStart(2,'0');document.getElementById('sw').innerText=h+':'+m+':'+s;}
 function swStart(){if(swI)return;swI=setInterval(function(){swD++;swRender();},1000);}
