@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Login</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0e17;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+.box{background:#1a1f2e;border:1px solid #2a3142;border-radius:20px;padding:30px;width:100%;max-width:350px;text-align:center}
+h1{color:#a855f7;margin-bottom:20px}
+input{width:100%;padding:14px;margin-bottom:12px;background:#0f1420;border:1px solid #2a3142;border-radius:12px;color:#fff;font-size:14px;outline:none}
+input:focus{border-color:#a855f7}
+button{width:100%;padding:14px;background:#a855f7;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;font-size:15px}
+button:hover{background:#9333ea}
+.link{margin-top:15px;font-size:13px;color:#888}
+.link a{color:#a855f7;cursor:pointer}
+.msg{padding:10px;border-radius:10px;margin-bottom:12px;font-size:12px;display:none}
+.msg.err{background:#7f1d1d;color:#ff6b6b;display:block}
+.msg.ok{background:#14532d;color:#4ade80;display:block}
+.pass-wrap{position:relative}
+.pass-wrap input{padding-right:45px}
+.eye{position:absolute;right:14px;top:50%;transform:translateY(-50%);cursor:pointer;display:flex;opacity:.6}
+.eye:hover{opacity:1}
+</style>
+</head>
+<body>
+
+<div class="box" id="box-login">
+<h1> Login</h1>
+<div class="msg" id="lm"></div>
+<input id="lu" placeholder="Username" autocomplete="off">
+<div class="pass-wrap">
+<input id="lp" type="password" placeholder="Password" autocomplete="off">
+<span class="eye" onclick="togglePass('lp',this)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</span>
+</div>
+<button onclick="doLogin()">Login</button>
+<div class="link">Belum punya akun? <a onclick="showD()">Daftar</a></div>
+</div>
+
+<div class="box" id="box-daftar" style="display:none">
+<h1> Daftar</h1>
+<div class="msg" id="dm"></div>
+<input id="du" placeholder="Username Baru" autocomplete="off">
+<div class="pass-wrap">
+<input id="dp" type="password" placeholder="Password Baru" autocomplete="off">
+<span class="eye" onclick="togglePass('dp',this)">
+<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+</span>
+</div>
+<button onclick="doDaftar()">Daftar</button>
+<div class="link">Sudah punya akun? <a onclick="showL()">Login</a></div>
+</div>
+
+<script>
+function togglePass(id,el){
+    var i=document.getElementById(id);
+    if(i.type==='password'){
+        i.type='text';
+        el.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>';
+    } else {
+        i.type='password';
+        el.innerHTML='<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>';
+    }
+}
+function msg(id,t,c){var e=document.getElementById(id);e.textContent=t;e.className='msg '+c;setTimeout(function(){e.className='msg'},2500);}
+function showD(){document.getElementById('box-login').style.display='none';document.getElementById('box-daftar').style.display='block';}
+function showL(){document.getElementById('box-login').style.display='block';document.getElementById('box-daftar').style.display='none';}
+function doDaftar(){
+    var u=document.getElementById('du').value.trim();
+    var p=document.getElementById('dp').value;
+    if(!u||!p){msg('dm','Isi username & password','err');return;}
+    if(u.length<3){msg('dm','Username min 3 huruf','err');return;}
+    if(p.length<4){msg('dm','Password min 4 huruf','err');return;}
+    var us={};try{us=JSON.parse(localStorage.getItem('users')||'{}');}catch(e){us={};}
+    if(us[u]){msg('dm','Username sudah dipakai','err');return;}
+    us[u]=p;localStorage.setItem('users',JSON.stringify(us));
+    msg('dm','Daftar berhasil!','ok');
+    setTimeout(showL,1200);
+}
+function doLogin(){
+    var u=document.getElementById('lu').value.trim();
+    var p=document.getElementById('lp').value;
+    if(!u||!p){msg('lm','Isi username & password','err');return;}
+    var us={};try{us=JSON.parse(localStorage.getItem('users')||'{}');}catch(e){us={};}
+    if(!us[u]){msg('lm','Username belum terdaftar','err');return;}
+    if(us[u]!==p){msg('lm','Password salah','err');return;}
+    localStorage.setItem('logged_in',u);
+    window.location.href='home.html';
+}
+window.addEventListener('load',function(){
+    var u=localStorage.getItem('logged_in');
+    if(u)window.location.href='home.html';
+});
+</script>
+</body>
+</html>file:///data/user/0/com.foxdebug.acodefree/files/public/login.html

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Home</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0e17;color:#fff;padding:15px}
+.hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;padding:12px 15px;background:#0f1420;border:1px solid #1a1f2e;border-radius:15px;position:sticky;top:10px;z-index:50}
+.hdr h1{font-size:16px}
+.hdr .ic{display:flex;gap:10px}
+.hdr .ic span{cursor:pointer;padding:6px 10px;background:#1a1f2e;border-radius:8px;display:flex}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:15px}
+.card{background:#0f1420;border:1px solid #1a1f2e;border-radius:15px;padding:20px;cursor:pointer;min-height:120px;display:flex;flex-direction:column;justify-content:space-between;transition:.3s}
+.card:hover{border-color:#a855f7;transform:translateY(-3px)}
+.card .cico{width:45px;height:45px;border-radius:12px;display:flex;justify-content:center;align-items:center;margin-bottom:12px}
+.card .tt{font-size:13px;font-weight:bold}
+.page{display:none}
+.page.active{display:block}
+.back{display:flex;align-items:center;gap:10px;margin-bottom:15px;padding:12px 15px;background:#0f1420;border:1px solid #1a1f2e;border-radius:15px;cursor:pointer}
+.cont{background:#0f1420;border:1px solid #1a1f2e;border-radius:15px;padding:25px;text-align:center}
+.cont input,.cont select,.cont textarea{width:100%;padding:14px;margin-bottom:12px;background:#0a0e17;border:1px solid #1a1f2e;border-radius:12px;color:#fff;font-size:14px}
+.cont button{width:100%;padding:14px;background:#a855f7;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;margin-bottom:10px}
+.res{margin-top:15px;padding:15px;background:#0a0e17;border-radius:12px;font-size:13px;color:#ddd;text-align:left;min-height:40px;white-space:pre-line}
+label{display:block;text-align:left;font-size:12px;color:#888;margin-bottom:6px}
+.bg-purple{background:#3b1f6e;color:#a855f7}
+.bg-blue{background:#1e3a5f;color:#60a5fa}
+.bg-green{background:#14532d;color:#4ade80}
+.bg-yellow{background:#713f12;color:#fbbf24}
+.bg-red{background:#7f1d1d;color:#ff6b6b}
+.bg-pink{background:#831843;color:#f472b6}
+.bg-cyan{background:#164e63;color:#22d3ee}
+.bg-orange{background:#7c2d12;color:#fb923c}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+<span onclick="goTo('home')" style="cursor:pointer;">
+<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+</span>
+<h1 id="pt">MY APP</h1>
+<div class="ic">
+<span onclick="goTo('home')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg></span>
+<span onclick="goTo('profile')"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#888" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg></span>
+<span onclick="logout()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff6b6b" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg></span>
+</div>
+</div>
+
+<div class="page active" id="p-home">
+<di class="grid">
+<div class="card" onclick="goTo('kalk')"><div class="cico bg-blue"></div><div class="tt">Kalkulator</div></div>
+<div class="card" onclick="goTo('cat')"><div class="cico bg-purple"></div><div class="tt">Catatan</div></div>
+<div class="card" onclick="goTo('todo')"><div class="cico bg-green"></div><div class="tt">To-Do List</div></div>
+<div class="card" onclick="goTo('pw')"><div class="cico bg-red"></div><div class="tt">Password</div></div>
+<div class="card" onclick="goTo('umur')"><div class="cico bg-orange"></div><div class="tt">Hitung Umur</div></div>
+<div class="card" onclick="goTo('bmi')"><div class="cico bg-pink"></div><div class="tt">BMI</div></div>
+<div class="card" onclick="goTo('kurs')"><div class="cico bg-cyan"></div><div class="tt">Kurs</div></div>
+<div class="card" onclick="goTo('cuaca')"><div class="cico bg-blue"></div><div class="tt">Cuaca</div></div>
+<div class="card" onclick="goTo('stop')"><div class="cico bg-red"></div><div class="tt">Stopwatch</div></div>
+<div class="card" onclick="goTo('tip')"><div class="cico bg-green"></div><div class="tt">Hitung Tip</div></div>
+<div class="card" onclick="goTo('diskon')"><div class="cico bg-orange"></div><div class="tt">Diskon</div></div>
+<div class="card" onclick="goTo('b64')"><div class="cico bg-cyan"></div><div class="tt">Base64</div></div>
+<div class="card" onclick="goTo('qrcode')"><div class="cico bg-purple"></div><div class="tt">QR Generator</div></div>
+<div class="card" onclick="goTo('translate')"><div class="cico bg-cyan"></div><div class="tt">Translate</div></div>
+<div class="card" onclick="goTo('kbbi')"><div class="cico bg-yellow"></div><div class="tt">KBBI</div></div>
+<div class="card" onclick="goTo('wiki')"><div class="cico bg-gray"></div><div class="tt">Wikipedia</div></div>
+<div class="card" onclick="goTo('quotes')"><div class="cico bg-pink"></div><div class="tt">Quotes</div></div>
+</di>
+</div>
+
+ <div class="page" id="p-profile">
+<div style="background:#0f1420;border:1px solid #1a1f2e;border-radius:16px;padding:16px;margin-bottom:15px">
+<div style="display:flex;align-items:center;justify-content:space-between">
+<span style="font-size:22px;color:#a855f7;cursor:pointer" onclick="goTo('home')"></span>
+<div style="text-align:center">
+<div style="font-size:16px;font-weight:bold">Profil & Keamanan</div>
+<div style="font-size:11px;color:#888">Foto · title · banner · password</div>
+</div>
+<span style="font-size:18px;color:#888;cursor:pointer" onclick="goTo('home')"></span>
+</div>
+</div>
+
+<div style="position:relative;height:130px;border-radius:16px;overflow:hidden;border:1px solid #2a3142">
+<img id="bannerUtama" src="https://picsum.photos/400/130?random=2" style="width:100%;height:100%;object-fit:cover">
+</div>
+
+<div style="position:relative;width:90px;height:90px;margin:-45px auto 12px;z-index:2">
+<img id="avatarUtama" src="https://picsum.photos/80/80?random=3" style="width:90px;height:90px;border-radius:50%;border:3px solid #0f1420;object-fit:cover;background:#2a3142">
+<span style="position:absolute;bottom:0;right:0;background:#a855f7;width:28px;height:28px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;border:2px solid #0f1420;font-size:14px" onclick="document.getElementById('fileInput').click()"></span>
+</div>
+
+<div style="text-align:center;font-size:20px;font-weight:bold;margin-bottom:4px;cursor:pointer" onclick="editNama()">
+<span id="namaTampil">User</span><span style="font-size:12px;color:#a855f7;margin-left:6px"></span>
+</div>
+<div id="titleTampil" style="text-align:center;color:#a855f7;font-size:12px;font-weight:bold;letter-spacing:2px;margin-bottom:15px">RAJA IBLIS</div>
+
+<div style="display:flex;justify-content:center;gap:8px;margin-bottom:22px;flex-wrap:wrap">
+<div style="background:#0f1420;border:1px solid #d4af37;border-radius:20px;padding:6px 12px;font-size:10px;color:#d4af37"> GS · OFFLINE · 1D 17H 4M FROZEN</div>
+<div style="background:#0f1420;border:1px solid #2a3142;border-radius:20px;padding:6px 12px;font-size:10px;color:#aaa"> 08/10/2026</div>
+</div>
+
+<div style="font-size:11px;color:#888;letter-spacing:1px;margin:20px 0 12px">FOTO PROFIL</div>
+<div style="text-align:center;margin-bottom:15px">
+<img id="previewFoto" src="https://picsum.photos/80/80?random=3" style="width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid #a855f7">
+</div>
+<div style="display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;margin-bottom:10px">
+<div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=3')" style="min-width:70px;text-align:center;cursor:pointer">
+<div style="width:70px;height:70px;border-radius:14px;background:#1a1f2e;border:2px solid #2a3142;overflow:hidden;margin-bottom:5px"><img src="https://picsum.photos/80/80?random=3" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="font-size:10px;color:#888">Default</div>
+</div>
+<div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=4')" style="min-width:70px;text-align:center;cursor:pointer">
+<div style="width:70px;height:70px;border-radius:14px;background:#1a1f2e;border:2px solid #2a3142;overflow:hidden;margin-bottom:5px"><img src="https://picsum.photos/80/80?random=4" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="font-size:10px;color:#888">Mask</div>
+</div>
+<div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=5')" style="min-width:70px;text-align:center;cursor:pointer">
+<div style="width:70px;height:70px;border-radius:14px;background:#1a1f2e;border:2px solid #2a3142;overflow:hidden;margin-bottom:5px"><img src="https://picsum.photos/80/80?random=5" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="font-size:10px;color:#888">Mafia</div>
+</div>
+<div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=6')" style="min-width:70px;text-align:center;cursor:pointer">
+<div style="width:70px;height:70px;border-radius:14px;background:#1a1f2e;border:2px solid #2a3142;overflow:hidden;margin-bottom:5px"><img src="https://picsum.photos/80/80?random=6" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="font-size:10px;color:#888">Hearts</div>
+</div>
+<div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=7')" style="min-width:70px;text-align:center;cursor:pointer">
+<div style="width:70px;height:70px;border-radius:14px;background:#1a1f2e;border:2px solid #2a3142;overflow:hidden;margin-bottom:5px"><img src="https://picsum.photos/80/80?random=7" style="width:100%;height:100%;object-fit:cover"></div>
+<div style="font-size:10px;color:#888">Anime</div>
+</div>
+</div>
+<button style="width:100%;background:linear-gradient(90deg,#a855f7,#c084fc);color:#fff;border:none;padding:15px;border-radius:14px;font-size:14px;font-weight:bold;cursor:pointer;margin-bottom:10px" onclick="simpanFoto()">Simpan Foto Profil</button>
+
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+
+<div style="font-size:11px;color:#888;letter-spacing:1px;margin:20px 0 12px">CUSTOM TITLE</div>
+<div style="display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap">
+<button class="btn-title" onclick="pilihTitle(this,'Lepas')" style="padding:10px 18px;border-radius:12px;border:1px solid #2a3142;background:#1a1f2e;color:#aaa;font-size:13px;cursor:pointer">Lepas</button>
+<button class="btn-title active" onclick="pilihTitle(this,'RAJA IBLIS')" style="padding:10px 18px;border-radius:12px;border:1px solid #a855f7;background:#a855f7;color:#fff;font-size:13px;cursor:pointer"> RAJA IBLIS</button>
+<button class="btn-title" onclick="pilihTitle(this,'PRO PLAYER')" style="padding:10px 18px;border-radius:12px;border:1px solid #2a3142;background:#1a1f2e;color:#aaa;font-size:13px;cursor:pointer">PRO PLAYER</button>
+</div>
+
+<div style="font-size:11px;color:#888;letter-spacing:1px;margin:20px 0 12px">BANNER PROFIL</div>
+<div style="display:flex;gap:10px;overflow-x:auto;margin-bottom:10px">
+<div onclick="pilihBanner(this,'none')" style="min-width:140px;height:75px;border-radius:12px;background:#1a1f2e;border:2px solid #2a3142;display:flex;justify-content:center;align-items:center;cursor:pointer;font-size:12px;color:#666">Tanpa</div>
+<div onclick="pilihBanner(this,'https://picsum.photos/400/130?random=8')" style="min-width:140px;height:75px;border-radius:12px;background:#1a1f2e;border:2px solid #a855f7;overflow:hidden;cursor:pointer"><img src="https://picsum.photos/400/130?random=8" style="width:100%;height:100%;object-fit:cover"></div>
+<div onclick="pilihBanner(this,'https://picsum.photos/400/130?random=9')" style="min-width:140px;height:75px;border-radius:12px;background:#1a1f2e;border:2px solid #2a3142;overflow:hidden;cursor:pointer"><img src="https://picsum.photos/400/130?random=9" style="width:100%;height:100%;object-fit:cover"></div>
+</div>
+
+<div style="font-size:11px;color:#888;letter-spacing:1px;margin:20px 0 12px">KEAMANAN</div>
+<div style="background:#1a1f2e;border:1px solid #2a3142;border-radius:14px;padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer" onclick="openModalPassword()">
+<div style="display:flex;align-items:center;gap:12px;font-size:14px"> Ubah Password</div>
+<div style="color:#666;font-size:18px">›</div>
+</div>
+
+<button onclick="logout()" style="width:100%;padding:14px;background:#ff3b3b;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer;margin-top:10px">Logout</button>
+
+<div class="modal-bg" id="modalNama" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:none;justify-content:center;align-items:center;padding:20px">
+<div style="background:#1a1f2e;border:1px solid #2a3142;border-radius:20px;padding:25px;width:100%;max-width:340px;text-align:center">
+<h3 style="color:#a855f7;margin-bottom:18px;font-size:17px">Ubah Nama</h3>
+<input id="inputNama" placeholder="Nama baru..." style="width:100%;padding:14px;margin-bottom:12px;background:#0f1420;border:1px solid #2a3142;border-radius:12px;color:#fff;font-size:14px;outline:none">
+<div style="display:flex;gap:10px">
+<button onclick="closeModal('modalNama')" style="flex:1;padding:13px;background:#2a3142;color:#ccc;border:none;border-radius:12px;font-weight:bold;cursor:pointer">Batal</button>
+<button onclick="simpanNama()" style="flex:1;padding:13px;background:#a855f7;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer">Simpan</button>
+</div>
+</div>
+</div>
+
+<div class="modal-bg" id="modalPassword" style="position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:none;justify-content:center;align-items:center;padding:20px">
+<div style="background:#1a1f2e;border:1px solid #2a3142;border-radius:20px;padding:25px;width:100%;max-width:340px;text-align:center">
+<h3 style="color:#a855f7;margin-bottom:18px;font-size:17px">Ubah Password</h3>
+<div class="msg" id="msgPass"></div>
+<input id="passLama" type="password" placeholder="Password lama" style="width:100%;padding:14px;margin-bottom:12px;background:#0f1420;border:1px solid #2a3142;border-radius:12px;color:#fff;font-size:14px;outline:none">
+<input id="passBaru" type="password" placeholder="Password baru" style="width:100%;padding:14px;margin-bottom:12px;background:#0f1420;border:1px solid #2a3142;border-radius:12px;color:#fff;font-size:14px;outline:none">
+<input id="passKonfir" type="password" placeholder="Konfirmasi password baru" style="width:100%;padding:14px;margin-bottom:12px;background:#0f1420;border:1px solid #2a3142;border-radius:12px;color:#fff;font-size:14px;outline:none">
+<div style="display:flex;gap:10px">
+<button onclick="closeModal('modalPassword')" style="flex:1;padding:13px;background:#2a3142;color:#ccc;border:none;border-radius:12px;font-weight:bold;cursor:pointer">Batal</button>
+<button onclick="simpanPassword()" style="flex:1;padding:13px;background:#a855f7;color:#fff;border:none;border-radius:12px;font-weight:bold;cursor:pointer">Simpan</button>
+</div>
+</div>
+</div>
+ </div>
+
+<div class="page" id="p-kalk"><div class="back" onclick="goTo('home')"> Kalkulator</div><div class="cont"><input id="kalki" placeholder="2+3*4"><button onclick="kalk()">Hitung</button><div class="res" id="kalkr">-</div></div></div>
+<div class="page" id="p-cat"><div class="back" onclick="goTo('home')"> Catatan</div><div class="cont"><textarea id="cati" rows="6" placeholder="Tulis catatan..."></textarea><button onclick="simpanCat()">Simpan</button><button onclick="hapusCat()">Hapus</button><div class="res" id="catr">-</div></div></div>
+<div class="page" id="p-todo"><div class="back" onclick="goTo('home')"> To-Do</div><div class="cont"><input id="todoi" placeholder="Tugas baru..."><button onclick="addTodo()">Tambah</button><div class="res" id="todor">Belum ada tugas</div></div></div>
+<div class="page" id="p-pw"><div class="back" onclick="goTo('home')"> Password</div><div class="cont"><label>Panjang</label><input type="number" id="pwl" value="16"><button onclick="genPw()">Generate</button><div class="res" id="pwr">-</div></div></div>
+<div class="page" id="p-umur"><div class="back" onclick="goTo('home')"> Hitung Umur</div><div class="cont"><label>Tanggal Lahir</label><input type="date" id="umuri"><button onclick="umur()">Hitung</button><div class="res" id="umurr">-</div></div></div>
+<div class="page" id="p-bmi"><div class="back" onclick="goTo('home')"> BMI</div><div class="cont"><label>Berat (kg)</label><input type="number" id="bb"><label>Tinggi (cm)</label><input type="number" id="tb"><button onclick="bmi()">Hitung</button><div class="res" id="bmir">-</div></div></div>
+<div class="page" id="p-kurs"><div class="back" onclick="goTo('home')"> Kurs</div><div class="cont"><label>Dari</label><select id="kd"><option>USD</option><option>IDR</option><option>EUR</option><option>JPY</option><option>SGD</option><option>MYR</option></select><label>Ke</label><select id="kk"><option>IDR</option><option>USD</option><option>EUR</option><option>JPY</option><option>SGD</option><option>MYR</option></select><label>Jumlah</label><input type="number" id="kj" value="1"><button onclick="kurs()">Konversi</button><div class="res" id="kursr">-</div></div></div>
+<div class="page" id="p-cuaca"><div class="back" onclick="goTo('home')"> Cuaca</div><div class="cont"><input id="cuacai" placeholder="Nama kota..."><button onclick="cuaca()">Cari</button><div class="res" id="cuacar">-</div></div></div>
+<div class="page" id="p-stop"><div class="back" onclick="goTo('home')"> Stopwatch</div><div class="cont"><div class="res" id="sw" style="font-size:40px;text-align:center;color:#a855f7">00:00:00</div><button onclick="swStart()"> Start</button><button onclick="swStop()"> Stop</button><button onclick="swReset()"> Reset</button></div></div>
+<div class="page" id="p-tip"><div class="back" onclick="goTo('home')"> Hitung Tip</div><div class="cont"><label>Total (Rp)</label><input type="number" id="tipt"><label>Tip (%)</label><input type="number" id="tipp" value="10"><button onclick="tip()">Hitung</button><div class="res" id="tipr">-</div></div></div>
+<div class="page" id="p-diskon"><div class="back" onclick="goTo('home')"> Diskon</div><div class="cont"><label>Harga Awal</label><input type="number" id="dh"><label>Diskon (%)</label><input type="number" id="dp2"><button onclick="diskon()">Hitung</button><div class="res" id="diskr">-</div></div></div>
+<div class="page" id="p-b64"><div class="back" onclick="goTo('home')"> Base64</div><div class="cont"><input id="b64i" placeholder="Teks..."><button onclick="enc()">Encode</button><button onclick="dec()">Decode</button><div class="res" id="b64r">-</div></div></div>
+<div class="page" id="p-qrcode"><div class="back" onclick="goTo('home')"> QR Generator</div><div class="cont"><input id="qri" placeholder="Teks atau link..."><button onclick="buatQR()">Buat QR</button><div class="res" id="qrr">-</div></div></div>
+
+<div class="page" id="p-translate"><div class="back" onclick="goTo('home')"> Translate</div><div class="cont"><input id="tri" placeholder="Teks..."><select id="trl"><option value="en">Indonesia  Inggris</option><option value="id">Inggris  Indonesia</option><option value="ja">Indonesia  Jepang</option></select><button onclick="doTranslate()">Terjemahkan</button><div class="res" id="trr">-</div></div></div>
+
+<div class="page" id="p-kbbi"><div cl

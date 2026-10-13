@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Profil & Keamanan</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0a0e17;color:#fff;padding:15px;padding-bottom:80px}
+
+/* HEADER */
+.top-header{display:flex;align-items:center;justify-content:space-between;padding:14px 16px;background:#0f1420;border:1px solid #1a1f2e;border-radius:16px;margin-bottom:15px}
+.top-header .back{font-size:24px;color:#a855f7;cursor:pointer;font-weight:bold}
+.top-header .title h2{font-size:17px;margin-bottom:2px}
+.top-header .title p{font-size:11px;color:#888}
+.top-header .menu{font-size:20px;color:#888;cursor:pointer}
+
+/* BANNER */
+.banner-prof{position:relative;height:130px;border-radius:16px;overflow:hidden;margin-bottom:0;border:1px solid #2a3142}
+.banner-prof img{width:100%;height:100%;object-fit:cover}
+.banner-prof .edit-banner{position:absolute;bottom:8px;right:8px;background:rgba(0,0,0,.7);color:#fff;padding:6px 10px;border-radius:10px;font-size:11px;cursor:pointer;border:1px solid #a855f7}
+
+/* AVATAR */
+.avatar-wrap{position:relative;width:90px;height:90px;margin:-45px auto 12px;z-index:2}
+.avatar-wrap img{width:90px;height:90px;border-radius:50%;border:3px solid #0f1420;object-fit:cover;background:#2a3142}
+.avatar-wrap .edit-av{position:absolute;bottom:0;right:0;background:#a855f7;width:28px;height:28px;border-radius:50%;display:flex;justify-content:center;align-items:center;cursor:pointer;border:2px solid #0f1420;font-size:14px}
+
+/* NAMA & TITLE */
+.nama-user{text-align:center;font-size:20px;font-weight:bold;margin-bottom:4px;cursor:pointer}
+.nama-user .edit-ico{font-size:12px;color:#a855f7;margin-left:6px}
+.title-user{text-align:center;color:#a855f7;font-size:12px;font-weight:bold;letter-spacing:2px;margin-bottom:15px}
+
+/* STATUS CHIP */
+.status-row{display:flex;justify-content:center;gap:8px;margin-bottom:22px;flex-wrap:wrap}
+.chip{background:#0f1420;border:1px solid #2a3142;border-radius:20px;padding:6px 12px;font-size:10px;color:#aaa}
+.chip.aktif{border-color:#d4af37;color:#d4af37}
+
+/* SECTION */
+.section-title{font-size:11px;color:#888;letter-spacing:1px;margin:20px 0 12px;text-transform:uppercase}
+.section-sub{font-size:11px;color:#666;margin-bottom:10px;margin-top:-6px}
+
+/* FOTO PROFIL */
+.foto-preview{text-align:center;margin-bottom:15px}
+.foto-preview img{width:70px;height:70px;border-radius:50%;object-fit:cover;border:2px solid #a855f7}
+.foto-options{display:flex;gap:10px;overflow-x:auto;padding-bottom:10px;margin-bottom:10px}
+.foto-option{min-width:70px;text-align:center;cursor:pointer}
+.foto-option .box{width:70px;height:70px;border-radius:14px;background:#1a1f2e;border:2px solid #2a3142;display:flex;justify-content:center;align-items:center;margin-bottom:5px;overflow:hidden;transition:.3s;font-size:26px;color:#666}
+.foto-option .box img{width:100%;height:100%;object-fit:cover}
+.foto-option.active .box{border-color:#a855f7;box-shadow:0 0 12px rgba(168,85,247,.4)}
+.foto-option .label{font-size:10px;color:#888}
+.foto-option.active .label{color:#a855f7;font-weight:bold}
+
+/* BUTTON */
+.btn-simpan{width:100%;background:linear-gradient(90deg,#a855f7,#c084fc);color:#fff;border:none;padding:15px;border-radius:14px;font-size:14px;font-weight:bold;cursor:pointer;margin-bottom:10px;transition:.3s}
+.btn-simpan:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(168,85,247,.4)}
+
+/* TITLE CHIP */
+.title-row{display:flex;gap:10px;margin-bottom:10px;flex-wrap:wrap}
+.btn-title{padding:10px 18px;border-radius:12px;border:1px solid #2a3142;background:#1a1f2e;color:#aaa;font-size:13px;cursor:pointer;transition:.3s}
+.btn-title.active{background:#a855f7;border-color:#a855f7;color:#fff;font-weight:bold}
+
+/* BANNER OPTIONS */
+.banner-options{display:flex;gap:10px;overflow-x:auto;margin-bottom:10px;padding-bottom:6px}
+.banner-option{min-width:140px;height:75px;border-radius:12px;background:#1a1f2e;border:2px solid #2a3142;display:flex;justify-content:center;align-items:center;cursor:pointer;overflow:hidden;font-size:12px;color:#666;transition:.3s}
+.banner-option img{width:100%;height:100%;object-fit:cover}
+.banner-option.active{border-color:#a855f7;box-shadow:0 0 12px rgba(168,85,247,.4)}
+
+/* KEAMANAN MENU */
+.menu-item{background:#1a1f2e;border:1px solid #2a3142;border-radius:14px;padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;cursor:pointer;transition:.3s}
+.menu-item:hover{border-color:#a855f7}
+.menu-item .left{display:flex;align-items:center;gap:12px;font-size:14px}
+.menu-item .right{color:#666;font-size:18px}
+
+/* MODAL */
+.modal-bg{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.85);z-index:9999;display:none;justify-content:center;align-items:center;padding:20px}
+.modal-bg.open{display:flex}
+.modal{background:#1a1f2e;border:1px solid #2a3142;border-radius:20px;padding:25px;width:100%;max-width:340px;text-align:center}
+.modal h3{color:#a855f7;margin-bottom:18px;font-size:17px}
+.modal input{width:100%;padding:14px;margin-bottom:12px;background:#0f1420;border:1px solid #2a3142;border-radius:12px;color:#fff;font-size:14px;outline:none}
+.modal input:focus{border-color:#a855f7}
+.modal .btn-row{display:flex;gap:10px;margin-top:6px}
+.modal .btn-row button{flex:1;padding:13px;border:none;border-radius:12px;font-weight:bold;cursor:pointer;font-size:13px}
+.modal .btn-ok{background:#a855f7;color:#fff}
+.modal .btn-cancel{background:#2a3142;color:#ccc}
+
+/* MSG */
+.msg{padding:10px;border-radius:10px;margin-bottom:12px;font-size:12px;display:none;text-align:center}
+.msg.err{background:#7f1d1d;color:#ff6b6b;display:block}
+.msg.ok{background:#14532d;color:#4ade80;display:block}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="top-header">
+    <span class="back" onclick="window.location.href='home.html'"></span>
+    <div class="title">
+        <h2>Profil & Keamanan</h2>
+        <p>Foto · title · banner · password</p>
+    </div>
+    <span class="menu" onclick="window.location.href='home.html'"></span>
+</div>
+
+<!-- BANNER -->
+<div class="banner-prof">
+    <img id="bannerUtama" src="https://picsum.photos/400/130?random=2">
+    <span class="edit-banner" onclick="alert('Pilih banner di bawah ')"> Ubah</span>
+</div>
+
+<!-- AVATAR -->
+<div class="avatar-wrap">
+    <img id="avatarUtama" src="https://picsum.photos/80/80?random=3">
+    <span class="edit-av" onclick="document.getElementById('fileInput').click()"></span>
+</div>
+
+<!-- NAMA -->
+<div class="nama-user" onclick="editNama()">
+    <span id="namaTampil">tublow</span><span class="edit-ico"></span>
+</div>
+<div class="title-user" id="titleTampil">RAJA IBLIS</div>
+
+<!-- STATUS -->
+<div class="status-row">
+    <div class="chip aktif"> GS · OFFLINE · 1D 17H 4M FROZEN</div>
+    <div class="chip"> 08/10/2026</div>
+</div>
+
+<!-- FOTO PROFIL -->
+<div class="section-title">FOTO PROFIL</div>
+<div class="foto-preview">
+    <img id="previewFoto" src="https://picsum.photos/80/80?random=3">
+</div>
+<div class="foto-options" id="fotoOptions">
+    <div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=3')">
+        <div class="box"><img src="https://picsum.photos/80/80?random=3"></div>
+        <div class="label">Default</div>
+    </div>
+    <div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=4')">
+        <div class="box"><img src="https://picsum.photos/80/80?random=4"></div>
+        <div class="label">Mask</div>
+    </div>
+    <div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=5')">
+        <div class="box"><img src="https://picsum.photos/80/80?random=5"></div>
+        <div class="label">Mafia</div>
+    </div>
+    <div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=6')">
+        <div class="box"><img src="https://picsum.photos/80/80?random=6"></div>
+        <div class="label">Hearts</div>
+    </div>
+    <div class="foto-option" onclick="pilihFoto(this,'https://picsum.photos/80/80?random=7')">
+        <div class="box"><img src="https://picsum.photos/80/80?random=7"></div>
+        <div class="label">Anime</div>
+    </div>
+    <div class="foto-option" onclick="document.getElementById('fileInput').click()">
+        <div class="box"></div>
+        <div class="label">Galeri</div>
+    </div>
+</div>
+<button class="btn-simpan" onclick="simpanFoto()">Simpan Foto Profil</button>
+
+<input type="file" id="fileInput" accept="image/*" style="display:none">
+
+<!-- CUSTOM TITLE -->
+<div class="section-title">CUSTOM TITLE</div>
+<div class="section-sub">Preset tap chip · custom tulis teks sendiri</div>
+<div class="title-row">
+    <button class="btn-title" onclick="pilihTitle(this,'Lepas')">Lepas</button>
+    <button class="btn-title active" onclick="pilihTitle(this,'RAJA IBLIS')"> RAJA IBLIS</button>
+    <button class="btn-title" onclick="pilihTitle(this,'PRO PLAYER')">PRO PLAYER</button>
+    <button class="btn-title" onclick="pilihTitle(this,'VIP MEMBER')">VIP MEMBER</button>
+    <button class="btn-title" onclick="pilihTitleCustom()"> Custom</button>
+</div>
+
+<!-- BANNER PROFIL -->
+<div class="section-title">BANNER PROFIL</div>
+<div class="section-sub">Tap banner untuk equip · tampil di profil chat</div>
+<div class="banner-options" id="bannerOptions">
+    <div class="banner-option" onclick="pilihBanner(this,'none')">Tanpa</div>
+    <div class="banner-option active" onclick="pilihBanner(this,'https://picsum.photos/400/130?random=8')">
+        <img src="https://picsum.photos/400/130?random=8">
+    </div>
+    <div class="banner-option" onclick="pilihBanner(this,'https://picsum.photos/400/130?random=9')">
+        <img src="https://picsum.photos/400/130?random=9">
+    </div>
+    <div class="banner-option" onclick="pilihBanner(this,'https://picsum.photos/400/130?random=10')">
+        <img src="https://picsum.photos/400/130?random=10">
+    </div>
+</div>
+
+<!-- KEAMANAN -->
+<div class="section-title">KEAMANAN</div>
+<div class="menu-item" onclick="openModalPassword()">
+    <div class="left"> Ubah Password</div>
+    <div class="right">›</div>
+</div>
+<div class="menu-item" onclick="alert('Fitur 2FA segera hadir')">
+    <div class="left"> Verifikasi 2 Langkah</div>
+    <div class="right">›</div>
+</div>
+<div class="menu-item" onclick="alert('Riwayat login kosong')">
+    <div class="left"> Riwayat Login</div>
+    <div class="right">›</div>
+</div>
+
+<!-- MODAL UBAH NAMA -->
+<div class="modal-bg" id="modalNama">
+    <div class="modal">
+        <h3>Ubah Nama</h3>
+        <div class="msg" id="msgNama"></div>
+        <input id="inputNama" placeholder="Nama baru...">
+        <div class="btn-row">
+            <button class="btn-cancel" onclick="closeModal('modalNama')">Batal</button>
+            <button class="btn-ok" onclick="simpanNama()">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL CUSTOM TITLE -->
+<div class="modal-bg" id="modalTitle">
+    <div class="modal">
+        <h3>Custom Title</h3>
+        <div class="msg" id="msgTitle"></div>
+        <input id="inputTitle" placeholder="Tulis title kamu...">
+        <div class="btn-row">
+            <button class="btn-cancel" onclick="closeModal('modalTitle')">Batal</button>
+            <button class="btn-ok" onclick="simpanTitleCustom()">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL UBAH PASSWORD -->
+<div class="modal-bg" id="modalPassword">
+    <div class="modal">
+        <h3>Ubah Password</h3>
+        <div class="msg" id="msgPass"></div>
+        <input id="passLama" type="password" placeholder="Password lama">
+        <input id="passBaru" type="password" placeholder="Password baru">
+        <input id="passKonfir" type="password" placeholder="Konfirmasi password baru">
+        <div class="btn-row">
+            <button class="btn-cancel" onclick="closeModal('modalPassword')">Batal</button>
+            <button class="btn-ok" onclick="simpanPassword()">Simpan</button>
+        </div>
+    </div>
+</div>
+
+<script>
+var user=localStorage.getItem('logged_in');
+if(!user) window.location.href='login.html';
+
+// ===== LOAD DATA TERSIMPAN =====
+function loadProfil(){
+    var p=localStorage.getItem('profil_'+user);
+    if(!p) return;
+    try{
+        p=JSON.parse(p);
+        if(p.foto) document.getElementById('avatarUtama').src=p.foto;
+        if(p.foto) document.getElementById('previewFoto').src=p.foto;
+        if(p.banner) document.getElementById('bannerUtama').src=p.banner;
+        if(p.nama) document.getElementById('namaTampil').textContent=p.nama;
+        if(p.title) document.getElementById('titleTampil').textContent=p.title;
+    }catch(e){}
+}
+function saveProfil(data){
+    localStorage.setItem('profil_'+user, JSON.stringify(data));
+}
+function getProfil(){
+    try{ return JSON.parse(localStorage.getItem('profil_'+user)||'{}'); }catch(e){ return {}; }
+}
+
+// ===== PILIH FOTO =====
+function pilihFoto(el, url){
+    document.querySelectorAll('.foto-option').forEach(function(o){ o.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('previewFoto').src=url;
+    window._fotoBaru=url;
+}
+function simpanFoto(){
+    if(!window._fotoBaru){ alert('Pilih foto dulu!'); return; }
+    document.getElementById('avatarUtama').src=window._fotoBaru;
+    var p=getProfil();
+    p.foto=window._fotoBaru;
+    saveProfil(p);
+    alert(' Foto profil tersimpan!');
+}
+
+// ===== UPLOAD GALERI =====
+document.getElementById('fileInput').addEventListener('change', function(e){
+    var f=e.target.files[0];
+    if(!f) return;
+    var r=new FileReader();
+    r.onload=function(ev){
+        document.getElementById('avatarUtama').src=ev.target.result;
+        document.getElementById('previewFoto').src=ev.target.result;
+        var p=getProfil();
+        p.foto=ev.target.result;
+        saveProfil(p);
+        alert(' Foto profil dari galeri tersimpan!');
+    };
+    r.readAsDataURL(f);
+});
+
+// ===== UBAH NAMA =====
+function editNama(){
+    document.getElementById('inputNama').value=document.getElementById('namaTampil').textContent;
+    document.getElementById('modalNama').classList.add('open');
+}
+function simpanNama(){
+    var n=document.getElementById('inputNama').value.trim();
+    if(!n){ msg('msgNama','Isi nama dulu','err'); return; }
+    document.getElementById('namaTampil').textContent=n;
+    var p=getProfil(); p.nama=n; saveProfil(p);
+    closeModal('modalNama');
+    alert(' Nama tersimpan!');
+}
+
+// ===== CUSTOM TITLE =====
+function pilihTitle(el, t){
+    document.querySelectorAll('.btn-title').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+    document.getElementById('titleTampil').textContent=t;
+    var p=getProfil(); p.title=t; saveProfil(p);
+}
+function pilihTitleCustom(){
+    document.getElementById('inputTitle').value=document.getElementById('titleTampil').textContent;
+    document.getElementById('modalTitle').classList.add('open');
+}
+function simpanTitleCustom(){
+    var t=document.getElementById('inputTitle').value.trim();
+    if(!t){ msg('msgTitle','Isi title dulu','err'); return; }
+    document.getElementById('titleTampil').textContent=t;
+    var p=getProfil(); p.title=t; saveProfil(p);
+    closeModal('modalTitle');
+    alert(' Title tersimpan!');
+}
+
+// ===== PILIH BANNER =====
+function pilihBanner(el, url){
+    document.querySelectorAll('.banner-option').forEach(function(b){ b.classList.remove('active'); });
+    el.classList.add('active');
+    if(url==='none'){
+        document.getElementById('bannerUtama').src='';
+        document.getElementById('bannerUtama').style.display='none';
+    } else {
+        document.getElementById('bannerUtama').src=url;
+        document.getElementById('bannerUtama').style.display='block';
+    }
+    var p=getProfil();
+    p.banner=url==='none'?'':url;
+    saveProfil(p);
+    alert(' Banner tersimpan!');
+}
+
+// ===== UBAH PASSWORD =====
+function openModalPassword(){
+    document.getElementById('passLama').value='';
+    document.getElementById('passBaru').value='';
+    document.getElementById('passKonfir').value='';
+    document.getElementById('modalPassword').classList.add('open');
+}
+function simpanPassword(){
+    var lama=document.getElementById('passLama').value;
+    var baru=document.getElementById('passBaru').value;
+    var konfir=document.getElementById('passKonfir').value;
+    if(!lama||!baru||!konfir){ msg('msgPass','Isi semua kolom','err'); return; }
+    var users=JSON.parse(localStorage.getItem('users')||'{}');
+    if(users[user]!==lama){ msg('msgPass','Password lama salah','err'); return; }
+    if(baru.length<4){ msg('msgPass','Password min 4 huruf','err'); return; }
+    if(baru!==konfir){ msg('msgPass','Konfirmasi tidak cocok','err'); return; }
+    users[user]=baru;
+    localStorage.setItem('users', JSON.stringify(users));
+    closeModal('modalPassword');
+    alert(' Password berhasil diubah!');
+}
+
+// ===== HELPER =====
+function msg(id,t,c){ var e=document.getElementById(id); e.textContent=t; e.className='msg '+c; setTimeout(function(){ e.className='msg'; },2500); }
+function closeModal(id){ document.getElementById(id).classList.remove('open'); }
+
+// ===== INIT =====
+loadProfil();
+</script>
+</body>
+</html>
