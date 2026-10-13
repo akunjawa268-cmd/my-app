@@ -195,9 +195,6 @@ label{display:block;text-align:left;font-size:12px;color:#888;margin-bottom:6px}
 
 <div class="page" id="p-translate"><div class="back" onclick="goTo('home')"> Translate</div><div class="cont"><input id="tri" placeholder="Teks..."><select id="trl"><option value="en">Indonesia  Inggris</option><option value="id">Inggris  Indonesia</option><option value="ja">Indonesia  Jepang</option></select><button onclick="doTranslate()">Terjemahkan</button><div class="res" id="trr">-</div></div></div>
 
-<div class="page" id="p-kbbi"><div class="back" onclick="goTo('home')">← KBBI</div><div class="cont"><input id="kbbii" placeholder="Kata..."><button onclick="cariKbbi()">Cari Arti</button><div class="res" id="kbbir">-</div></div></div>
-
-<div class="page" id="p-wiki"><div class="back" onclick="goTo('home')">← Wikipedia</div><div class="cont"><input id="wikii" placeholder="Cari..."><button onclick="cariWiki()">Cari</button><div class="res" id="wikiris">-</div></div></div>
 
 <script>
 var u=localStorage.getItem('logged_in');
@@ -209,7 +206,7 @@ function goTo(p){
 document.querySelectorAll('.page').forEach(function(x){x.classList.remove('active');});
 var el=document.getElementById('p-'+p);
 if(el)el.classList.add('active');
-var t={home:'MY APP',profile:'Profil',kalk:'Kalkulator',cat:'Catatan',todo:'To-Do',pw:'Password',umur:'Umur',bmi:'BMI',kurs:'Kurs',cuaca:'Cuaca',stop:'Stopwatch',tip:'Tip',diskon:'Diskon',b64:'Base64',qrcode:'QR Generator',quotes:'Quotes',translate:'Translate',kbbi:'KBBI',wiki:'Wikipedia'};
+var t={home:'MY APP',profile:'Profil',kalk:'Kalkulator',cat:'Catatan',todo:'To-Do',pw:'Password',umur:'Umur',bmi:'BMI',kurs:'Kurs',cuaca:'Cuaca',stop:'Stopwatch',tip:'Tip',diskon:'Diskon',b64:'Base64',qrcode:'QR Generator',quotes:'Quotes'};
 document.getElementById('pt').textContent=t[p]||'MY APP';
 window.scrollTo(0,0);
 }
@@ -237,9 +234,6 @@ function enc(){document.getElementById('b64r').innerText=btoa(document.getElemen
 function dec(){try{document.getElementById('b64r').innerText=atob(document.getElementById('b64i').value);}catch(e){document.getElementById('b64r').innerText='Error';}}
 function buatQR(){var t=document.getElementById('qri').value;if(!t){document.getElementById('qrr').innerText='Isi dulu!';return;}document.getElementById('qrr').innerHTML='<img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data='+encodeURIComponent(t)+'">';}
 function ambilQuotes(){var q=['Hidup itu sederhana, kita yang membuatnya rumit.','Jangan tunggu besok, mulai sekarang.','Kegagalan adalah awal dari kesuksesan.','Berpikir positif, hasil positif.','Setiap hari adalah kesempatan baru.','Jangan pernah menyerah, kesuksesan menunggu.'];document.getElementById('quotesr').innerText=q[Math.floor(Math.random()*q.length)];}
-function doTranslate(){var t=document.getElementById('tri').value;var l=document.getElementById('trl').value;if(!t)return;document.getElementById('trr').innerHTML='<a href="https://translate.google.com/?sl=auto&tl='+l+'&text='+encodeURIComponent(t)+'" target="_blank" style="color:#a855f7">Buka Google Translate</a>';}
-function cariKbbi(){var t=document.getElementById('kbbii').value;if(!t)return;document.getElementById('kbbir').innerHTML='<a href="https://kbbi.kemdikbud.go.id/entri/'+encodeURIComponent(t)+'" target="_blank" style="color:#a855f7">Lihat arti "'+t+'" di KBBI</a>';}
-function cariWiki(){var t=document.getElementById('wikii').value;if(!t)return;document.getElementById('wikiris').innerHTML='<a href="https://id.wikipedia.org/wiki/'+encodeURIComponent(t)+'" target="_blank" style="color:#a855f7">Lihat "'+t+'" di Wikipedia</a>';}
 </script>
 </body>
 </html>
